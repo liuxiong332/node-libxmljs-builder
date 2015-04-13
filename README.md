@@ -128,8 +128,8 @@ Copyright (c) 2015 liuxiong. Licensed under the MIT license.
 
 
 
-[npm-url]: https://npmjs.org/package/node-libxmljs-builder
-[npm-image]: https://badge.fury.io/js/node-libxmljs-builder.svg
+[npm-url]: https://npmjs.org/package/libxmljs-builder
+[npm-image]: https://badge.fury.io/js/libxmljs-builder.svg
 [travis-url]: https://travis-ci.org/liuxiong332/node-libxmljs-builder
 [travis-image]: https://travis-ci.org/liuxiong332/node-libxmljs-builder.svg?branch=master
 [daviddm-url]: https://david-dm.org/liuxiong332/node-libxmljs-builder
