@@ -14,12 +14,18 @@ class ChildrenBuilder
   forEach: (callback) -> @childrens.forEach callback
 
   node: (name, attrs, content) ->
+    @nodeNS(name, null, attrs, content)
+
+  _newElement: (name) -> new Element @doc, name
+
+  nodeNS: (name, ns, attrs, content) ->
     if(typeof attrs isnt 'object')
       content = attrs
       attrs = null
 
-    element = new Element(@doc, name)
+    element = @_newElement name
     element.attr(attrs) if attrs?
+    element.namespace @xmlBuilder.getNS(ns)
 
     if typeof content isnt 'function'
       element.text(content)
@@ -29,12 +35,6 @@ class ChildrenBuilder
       childrenBuilder.forEach (node) ->
         element.addChild node
     @childrens.push element
-    element
-
-  nodeNS: (name, ns, attrs, content) ->
-    console.log name + ':' + ns + ':' + attrs + ':' + content
-    element = @node(name, attrs, content)
-    element.namespace ns.key, ns.href
     element
 
 module.exports =
@@ -56,7 +56,13 @@ class XmlBuilder extends ChildrenBuilder
     else
       @_addNS(key, href) for key, href of nsObj
 
-  getNS: (key) -> {key: key, href: @namespaces[key]}
+  getNS: (key) -> @namespaces[key]
+
+  _newElement: (name) ->
+    element = new Element @doc, name
+    for prefix, href of @namespaces
+      @namespaces[prefix] = element.defineNamespace(prefix, href)
+    element
 
   root: (name, attrs, content) ->
     element = @node name, attrs, content
