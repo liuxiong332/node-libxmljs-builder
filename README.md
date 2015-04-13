@@ -7,21 +7,115 @@ the xml builder that wrap libxmljs
 ## Install
 
 ```bash
-$ npm install --save node-libxmljs-builder
+$ npm install --save libxmljs-builder
 ```
 
 
 ## Usage
 
+### Create document and child nodes
+
 ```javascript
-var nodeLibxmljsBuilder = require('node-libxmljs-builder');
-nodeLibxmljsBuilder(); // "awesome"
+var Builder = require('libxmljs-builder');
+var xmlBuilder = new Builder
+var doc = xmlBuilder.root('root', {attrA: 'valA', attrB: 'valB'}, function(builder) {
+  builder.node('nodeA', {attrC: 'valC'}, 'nodeText')
+});
+console.log(doc.toString());
+```
+that will generate following xml:
+```xml
+<root attrA="valA" attrB="valB">
+  <nodeA attrC="valC">nodeText<nodeA>
+</root>
+```
+
+### create document with nameapce
+
+```javascript
+var Builder = require('libxmljs-builder');
+var xmlBuilder = new Builder
+xmlBuilder.defineNS {nsA: 'namespaceA', nsB: 'namespaceB'}
+var doc = xmlBuilder.rootNS('nsA', 'root', {attrA: 'valA', attrB: 'valB'}, function(builder) {
+  builder.nodeNS('nsB', 'nodeA', {attrC: 'valC'}, 'nodeText')
+});
+console.log(doc.toString());
+```
+that will generate the following xml:
+```xml
+<nsA:root xmlns:nsA="namespaceA" xmlns:nsB="namespaceB" xmlns:nsC="namespaceC" attrA="valA" attrB="valB">
+  <nsB:nodeA attrC="valC">nodeText</nsB:nodeA>
+</nsA:root>
 ```
 
 ## API
 
-_(Coming soon)_
+### class XmlBuilder
 
+**Methods**
+
+  * `defineNS(nsobj, href)`
+
+    define the namespaces that xml need to use
+    * `nsObj` **Object|String**
+
+      if is String, it is the namespace prefix, else it's the prefix-href of namespace
+
+    * `href` **String**
+
+      namespace href, it's valid only if nsObj is String
+
+    * `return` **Namespace**
+
+      [the libxmljs Namespace Object](https://github.com/polotek/libxmljs/wiki/Namespaces)
+
+  * `getNS(prefix)`
+
+    get the namespace object
+    * `prefix` **String**
+
+      the namespace's prefix
+
+    * `return` **Namespace**
+  * `root(name, attrs, content)`
+
+    set the root element
+
+    * `name` **String**
+
+      the element's name
+
+    * `attrs` **Object**
+
+      key-value of attribute list
+
+    * `content` **String|Function**
+
+      if content is String, then it's element's text. if is Function, it can add children node in this function. The function's signature is `function(builder)`, when `builder` is `ChildrenBuilder` type.
+
+    * `return` **Document**
+
+      [The libxmljs Document class](https://github.com/polotek/libxmljs/wiki/Document).
+
+  * `rootNS(ns, name, attrs, content)`
+
+    set the root element with namespace
+
+    * `ns` **String**
+
+      the namespace prefix. Other parameters are the same with the `root(name, attrs, content)` method.
+
+### class ChildrenBuilder
+
+**Methods**
+
+  * `node(name, attrs, content)`
+
+  define the new element. The parameters and return value is the same with `root(name, attrs, content)`.
+
+  * `nodeNS(ns, name, attrs, content)`
+
+  define new element with namespace. The parameters and return value is the same with `rootNS(ns, name, attrs, content)`.
 
 ## Contributing
 

@@ -14,18 +14,18 @@ class ChildrenBuilder
   forEach: (callback) -> @childrens.forEach callback
 
   node: (name, attrs, content) ->
-    @nodeNS(name, null, attrs, content)
+    @nodeNS(null, name, attrs, content)
 
   _newElement: (name) -> new Element @doc, name
 
-  nodeNS: (name, ns, attrs, content) ->
+  nodeNS: (ns, name, attrs, content) ->
     if(typeof attrs isnt 'object')
       content = attrs
       attrs = null
 
     element = @_newElement name
     element.attr(attrs) if attrs?
-    element.namespace @xmlBuilder.getNS(ns)
+    element.namespace @xmlBuilder.getNS(ns) if ns?
 
     if typeof content isnt 'function'
       element.text(content)

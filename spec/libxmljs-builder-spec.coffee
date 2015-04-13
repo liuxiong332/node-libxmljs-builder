@@ -34,7 +34,14 @@ describe 'libxmljsBuilder', ->
     builder.defineNS {nsA: 'namespaceA', nsB: 'namespaceB'}
     builder.defineNS 'nsC', 'namespaceC'
 
-    doc = builder.rootNS 'hello', 'nsA', (cb) ->
-      cb.nodeNS 'world', 'nsB', 'good'
+    doc = builder.rootNS 'nsA', 'hello', (cb) ->
+      cb.nodeNS 'nsB', 'world', 'good'
     doc.root().namespace().href().should.equal 'namespaceA'
     doc.childNodes()[0].namespace().href().should.equal 'namespaceB'
+
+  it 'create document with namespaces', ->
+    xmlBuilder = new Builder
+    xmlBuilder.defineNS {nsA: 'namespaceA', nsB: 'namespaceB'}
+
+    doc = xmlBuilder.rootNS 'root', 'nsA', {attrA: 'valA', attrB: 'valB'}, (builder) ->
+      builder.nodeNS 'nodeA', 'nsB', {attrC: 'valC'}, 'nodeText'
