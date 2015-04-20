@@ -27,13 +27,14 @@ class ChildrenBuilder
     element.attr(attrs) if attrs?
     element.namespace @xmlBuilder.getNS(ns) if ns?
 
-    if typeof content isnt 'function'
-      element.text(content)
-    else
+    if typeof content is 'function'
       childrenBuilder = new ChildrenBuilder(@xmlBuilder, @doc)
       content.call(@xmlBuilder, childrenBuilder)
       childrenBuilder.forEach (node) ->
         element.addChild node
+    else if content?
+      element.text(content)
+
     @childrens.push element
     element
 
