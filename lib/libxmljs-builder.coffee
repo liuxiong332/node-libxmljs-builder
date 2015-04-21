@@ -7,6 +7,9 @@
 ###
 {Document, Element} = require 'libxmljs'
 
+do ->
+  Element.prototype[key] = value for key, value of require './element-extends'
+
 class ChildrenBuilder
   constructor: (@xmlBuilder, @doc) ->
     @childrens = []

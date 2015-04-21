@@ -1,7 +1,7 @@
 {
   "name": "libxmljs-builder",
   "description": "the xml builder that wrap libxmljs",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "homepage": "https://github.com/liuxiong332/node-libxmljs-builder",
   "bugs": "https://github.com/liuxiong332/node-libxmljs-builder/issues",
   "license": "MIT",
@@ -19,7 +19,8 @@
   ],
   "keywords": [],
   "dependencies": {
-    "libxmljs": "^0.13.0"
+    "libxmljs": "^0.13.0",
+    "mixto": "^1.0.0"
   },
   "devDependencies": {
     "gulp": "^3.8.8",
