@@ -1,7 +1,7 @@
 {
   "name": "libxmljs-builder",
   "description": "the xml builder that wrap libxmljs",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/liuxiong332/node-libxmljs-builder",
   "bugs": "https://github.com/liuxiong332/node-libxmljs-builder/issues",
   "license": "MIT",

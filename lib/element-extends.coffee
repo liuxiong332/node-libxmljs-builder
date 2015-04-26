@@ -1,6 +1,6 @@
 module.exports =
   attrVal: (key) ->
-    @attr(key).value()
+    @attr(key)?.value()
 
   attrVals: ->
     attrs = {}
